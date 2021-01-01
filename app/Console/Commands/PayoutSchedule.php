@@ -47,7 +47,7 @@ class PayoutSchedule extends Command
     public function handle()
     {
 
-        $subscriptions_eligable = Subscription::whereRaw('latest_invoice_id != latest_paid_out_invoice_id')->where('disputed_invoice_id', NULL)->where('latest_invoice_amount', '>', 0)->where('latest_invoice_paid_at', '<=', Carbon::now()->subDays(1))->orWhereNull('latest_paid_out_invoice_id')->where('disputed_invoice_id', NULL)->where('latest_invoice_amount', '>', 0)->where('latest_invoice_paid_at', '<=', Carbon::now()->subDays(1))->where('status', '<=', 4)->get();
+        $subscriptions_eligable = Subscription::whereRaw('latest_invoice_id != latest_paid_out_invoice_id')->where('disputed_invoice_id', NULL)->where('latest_invoice_amount', '>', 0)->where('status', '<=', 4)->where('latest_invoice_paid_at', '<=', Carbon::now()->subDays(1))->orWhereNull('latest_paid_out_invoice_id')->where('disputed_invoice_id', NULL)->where('latest_invoice_amount', '>', 0)->where('latest_invoice_paid_at', '<=', Carbon::now()->subDays(1))->where('status', '<=', 4)->get();
 
 
         foreach ($subscriptions_eligable as $sub_eligable) {
@@ -67,7 +67,7 @@ class PayoutSchedule extends Command
                     try {
                         
                         $app_fee = 0.05 * $sub_eligable->level;
-                        
+                        Log::info($sub_eligable->latest_invoice_amount * (1 - $app_fee));
                         // Send payment
                         try{
 

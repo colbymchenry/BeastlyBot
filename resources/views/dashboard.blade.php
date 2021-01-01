@@ -330,16 +330,30 @@
           @else
 
             <div class="col-12 col-sm-6">
-                <a href="javascript:void(0);" class="card card-block card-hover pulse"
+                <!--<a href="javascript:void(0);" class="card card-block card-hover"
                     id="btn_start-shop-block">
                     <div class="counter counter-lg counter-inverse blue-grey-100 vertical-align h-100">
                       <div class="vertical-align-middle">
                         <div class="counter-icon mb-5"><i class="icon-shop text-white" aria-hidden="true"></i></div>
-                        <span class="counter-number text-white">Create Shop</span>
+                        <span class="counter-number text-white">Add Bot</span>
                       </div>
                     </div>
+                </a>-->
+                <a href="{{ 'https://discordapp.com/oauth2/authorize?client_id=' . env('DISCORD_CLIENT_ID') . '&scope=bot&permissions=' . env('DISCORD_BOT_PERMISSIONS') }}" target="_blank" class="card card-block btn btn-primary bg-blue-600 ladda-button"
+                    id="btn_start-shop-block" data-style="slide-up" data-plugin="ladda">
+                    <i class="icon wb-info-circle l-up text-white" aria-hidden="true"
+                      data-plugin="webuiPopover"
+                      data-content="&lt;p&gt;To create a shop add BeastlyBot to your Discord server.&lt;/p&gt;" data-trigger="hover"
+                      data-animation="pop"></i>
+                    <div class="counter counter-lg counter-inverse blue-grey-100 vertical-align h-100">
+                      <div class="vertical-align-middle ladda-label">
+                        <div class="counter-icon mb-5"><i class="icon-discord text-white" aria-hidden="true"></i></div>
+                        <span class="counter-number text-white">Add Bot</span>
+                      </div>
+                      <span class="ladda-spinner"></span>
+                    </div>
                 </a>
-                <a href="{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&client_id=' . env('STRIPE_CLIENT_ID') }}" class="d-none card card-block btn btn-primary bg-blue-600 ladda-button"
+                {{--<a href="{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&client_id=' . env('STRIPE_CLIENT_ID') }}" class="d-none card card-block btn btn-primary bg-blue-600 ladda-button"
                     id="btn_connect-stripe-block" data-style="slide-up" data-plugin="ladda">
                     <i class="icon wb-info-circle l-up text-white" aria-hidden="true"
                       data-plugin="webuiPopover"
@@ -352,17 +366,34 @@
                       </div>
                       <span class="ladda-spinner"></span>
                     </div>
+                </a>--}}
+                <a href="javascript:void(0);" class="d-none card card-block card-hover pulse"
+                    id="btn_connect-stripe-block" data-toggle="slidePanel" data-url="/servers?slide=true">
+                    <div class="counter counter-lg counter-inverse blue-grey-100 vertical-align h-100">
+                      <div class="vertical-align-middle">
+                        <div class="counter-icon mb-5"><i class="icon-shop text-white" aria-hidden="true"></i></div>
+                        <span class="counter-number text-white">Shops</span>
+                      </div>
+                    </div>
                 </a>
             </div>
 
             <script type="text/javascript">
                 function changeBtn() {
+                  setTimeout(function(){
                     $('#btn_connect-stripe-block').removeClass('d-none');
                     $('#btn_start-shop-block').addClass('d-none');
+                  },2000);
                 }
                 window.onload = function () {
                     document.getElementById("btn_start-shop-block").addEventListener('click', changeBtn);
                 }
+                @if(\App\DiscordStore::where('user_id', auth()->user()->id)->exists())
+                window.onload = function () {
+                  $('#btn_connect-stripe-block').removeClass('d-none');
+                  $('#btn_start-shop-block').addClass('d-none');
+                }
+                @endif
             </script>
 
           @endif

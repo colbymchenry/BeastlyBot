@@ -113,7 +113,7 @@ class DiscordOAuthController extends Controller {
             $next_url = $user->url_next;
             if(strpos($next_url, 'slide-') !== false){
                 if(strpos($next_url, 'account-') !== false){
-                    return redirect('account/settings');
+                    return redirect('dashboard');
                 }
                 else if(strpos($next_url, 'server-') !== false){
                     return redirect('servers');

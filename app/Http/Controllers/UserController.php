@@ -234,7 +234,7 @@ class UserController extends Controller {
 
             $subscription = Subscription::where('id', $sub_id)->first();
 
-            if(auth()->user()->id != $subscription->user_id || auth()->user()->admin != 1) {
+            if(auth()->user()->id != $subscription->user_id && auth()->user()->admin != 1) {
                 return response()->json(['success' => false, 'msg' => 'This is not your subscription. Contact support']);
             }else if($subscription->status == 3){
                 return response()->json(['success' => false, 'msg' => 'Refund has already been requested.']);

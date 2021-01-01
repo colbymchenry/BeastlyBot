@@ -16,7 +16,7 @@
               <i class="icon wb-chevron-right-mini" aria-hidden="true"></i>
             </div>
             <div class="timeline-info">
-              <time datetime="2017-05-15">Click on the role</time>
+              <time datetime="2017-05-15">Click on role</time>
             </div>
             <div class="timeline-content">
               <div class="card card-article card-shadow">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="card-block">
                   <h3 class="card-title">Enable Role</h3>
-                  <p>Enabling a role will toggle product availability on your server Store Front.</p>
+                  <p>Enabling a role will toggle product availability on your server Store Front. If this is your first time, you will be informed to connect your bank account to get paid.</p>
                 </div>
               </div>
             </div>

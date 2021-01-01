@@ -141,7 +141,7 @@ class StripeHelper
         return Cache::get('balance_' . $this->user->StripeConnect->express_id, 0);
     }
 
-    public function getLoginURL(): string {
+    public function getLoginURL() {
         \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
         return $this->isExpressUser() ? \Stripe\Account::createLoginLink($this->user->StripeConnect->express_id)->url : null;
     }

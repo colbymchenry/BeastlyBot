@@ -14,7 +14,7 @@
         <div>
             <div>
                 <div>
-                @if(!auth()->user()->getStripeHelper()->isExpressUser())
+                {{--@if(!auth()->user()->getStripeHelper()->isExpressUser())
                     <div class="list-group">
                         <a class="list-group-item list-group-item-action flex-column align-items-start text-center pulse" href="{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&client_id=' . env('STRIPE_CLIENT_ID')  }}">
                             <h4 class="list-group-item-heading mt-0 mb-5">Connect Stripe</h4>
@@ -30,7 +30,7 @@
                             </p>
                         </a>
                     </div>
-                @endif
+                @endif --}}
                     <p>The <mark>Ultimate Shop Guide</mark>, follow this guide to setup shop!</p>
                         <div class="list-group">
                             <a class="list-group-item list-group-item-action flex-column align-items-start active" href="#step1">
@@ -52,7 +52,7 @@
                         </div>
                 </div>
                 <ul class="timeline timeline-icon">
-                @if(auth()->user()->getStripeHelper()->isExpressUser())
+                {{--@if(auth()->user()->getStripeHelper()->isExpressUser())--}}
                     <span class="badge badge-lg badge-primary bg-purple-600" id="step1">Step 1</span>
                     @include('help/block/adding-a-server')
                     <span class="badge badge-lg badge-primary bg-purple-600" id="step2">Step 2</span>
@@ -61,7 +61,7 @@
                     @include('help/block/setting-server-settings')
                     <span class="badge badge-lg badge-primary bg-purple-600" id="step4">Step 4</span>
                     @include('help/block/go-live')
-                @endif
+                {{--@endif--}}
                 </ul>
             </div>
         </div>

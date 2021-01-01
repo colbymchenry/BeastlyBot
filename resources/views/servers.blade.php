@@ -8,19 +8,19 @@
         <ol class="breadcrumb">
             <h4 class="font-weight-100">Servers</h4>
         </ol>
-        @if(auth()->user()->StripeConnect->express_id != null)
+       {{-- @if(auth()->user()->StripeConnect->express_id != null) --}}
         <div class="page-header-actions add-pulse">
             <a class="btn btn-primary btn-round"
-        href="{{ 'https://discordapp.com/oauth2/authorize?client_id=' . env('DISCORD_CLIENT_ID') . '&scope=bot&permissions=' . env('DISCORD_BOT_PERMISSIONS') }}" target="_blank" id="Addbtn">
+        href="{{ 'https://discordapp.com/oauth2/authorize?client_id=' . env('DISCORD_CLIENT_ID') . '&scope=bot&permissions=' . env('DISCORD_BOT_PERMISSIONS') }}" target="_blank" id="Addbtn" onclick="changeBtn()">
                 <i class="icon wb-plus" aria-hidden="true"></i>
                 Add Bot
             </a>
-            <a class="btn btn-primary btn-outline btn-round d-none" id="Refreshbtn" href="/servers#refresh">
+            <button type="button" class="btn btn-primary btn-outline btn-round d-none pulse" id="Refreshbtn" onclick="document.location.href='/servers#refresh';">
                 <i class="icon wb-refresh" aria-hidden="true"></i>
                 Refresh
-            </a>
+            </button>
         </div>
-        @else
+      {{--  @else
         <div class="page-header-actions add-pulse">
             <a class="btn btn-primary btn-round"
                href="{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&client_id=' . env('STRIPE_CLIENT_ID') }}">
@@ -28,7 +28,16 @@
                 <i class="icon-stripe ml-2" aria-hidden="true"></i>
             </a>
         </div>
-        @endif
+        @endif --}}
+        <script type="text/javascript">
+                function changeBtn() {
+                  setTimeout(function(){
+                    $('#Refreshbtn').removeClass('d-none');
+                    $('#Addbtn').addClass('d-none');
+                  },2000);
+                }
+              
+            </script>
     </div>
 <div class="row">
     <div class="col-lg-12">
@@ -102,6 +111,11 @@
             }
         })
         }
+    },1900);
+    setInterval(function(){
+    if(window.location.href.includes('refresh')) {
+        document.location.href='/servers#refresh';
+    }
     },1900);
     setTimeout(function(){
     if( $('#servers-table tr').length == 0 ) {

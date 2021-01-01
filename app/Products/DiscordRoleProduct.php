@@ -70,7 +70,25 @@ class DiscordRoleProduct extends Product
     }
 
     public function create(Request $request) {
-        $this->createProduct();
+        //$this->createProduct();
+        if($this->getStripeProduct() == null) {
+            \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+            try {
+                $this->stripe_product_obj = \Stripe\Product::retrieve($this->getStripeID());
+                Cache::put('product_' . $this->getStripeID(), $this->stripe_product_obj, 60 * 10);
+            } catch (\Exception $e) {
+            }
+
+            if($this->stripe_product_obj == null) {
+                $this->stripe_product_obj = \Stripe\Product::create([
+                    'name' => $request['name'],
+                    'id' => $this->getStripeID(),
+                    'type' => 'service',
+                    'metadata' => ['user_id' => auth()->user()->id],
+                ]);
+                Cache::put('product_' . $this->getStripeID(), $this->stripe_product_obj, 60 * 10);
+            }
+        }
 
         if(! \App\DiscordStore::where('guild_id', $this->guild_id)->exists()) {
             $this->product->discord_store = DiscordStore::create([
@@ -83,7 +101,25 @@ class DiscordRoleProduct extends Product
     }
 
     public function update(Request $request) {
-        $this->createProduct();
+       // $this->createProduct();
+       if($this->getStripeProduct() == null) {
+        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        try {
+            $this->stripe_product_obj = \Stripe\Product::retrieve($this->getStripeID());
+            Cache::put('product_' . $this->getStripeID(), $this->stripe_product_obj, 60 * 10);
+        } catch (\Exception $e) {
+        }
+
+        if($this->stripe_product_obj == null) {
+            $this->stripe_product_obj = \Stripe\Product::create([
+                'name' => $request['name'],
+                'id' => $this->getStripeID(),
+                'type' => 'service',
+                'metadata' => ['user_id' => auth()->user()->id],
+            ]);
+            Cache::put('product_' . $this->getStripeID(), $this->stripe_product_obj, 60 * 10);
+        }
+    }
 
         try {
             if(! \App\DiscordStore::where('guild_id', $this->guild_id)->exists()) {

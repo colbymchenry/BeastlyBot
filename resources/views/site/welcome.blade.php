@@ -44,8 +44,8 @@
                             <h1 class="mb-10"><span class="text-white">Beastly Bot</span></h1>
                         </div>
                         <div class="wow fadeInUp" data-wow-delay=".2s" style="visibility:hidden">
-                            <p class="mb-20">The beastly subscription bot for Discord,<br/> sell in-chat roles and
-                                manage payments with Beastly.</p>
+                            <p class="mb-20">The beastly subscription bot for Discord, officially<br/> partnered with Stripe to sell in-chat roles and
+                                manage payments.</p>
                         </div>
                         <div class="banner-action wow fadeInUp" data-wow-delay=".3s" style="visibility:hidden">
                             @auth
@@ -133,8 +133,8 @@
                     <div class="section-title mb-40">
                         <h2><span>Take subscription payments</span></h2><br/>
                         <h2><span>from Discord</span></h2>
-                        <p class="mt-35">Beastly Bot is the best subscription bot for Discord, fully managing
-                            subscription payments and user role management for your server. </p>
+                        <p class="mt-35">BeastlyBot partners with Stripe for fast, secure payments. The best subscription bot for Discord, fully managing
+                            subscription payments and user role management for your server.</p>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
@@ -225,20 +225,21 @@
                             </p>
                         </div>
                     </div>-->
-                    <div class="service-single style-3 style-5 mt-50 mt-sm-0 wow zoomIn" data-wow-delay=".4s">
-                        <i class="ti-announcement"></i>
-                        <div class="service-single-brief">
-                            <h4><span>Fraud Protection</span></h4>
-                            <p>Beastly Bot will monitor each payment for chargebacks and disputes to prevent fraud, and file proof with bank accordingly.
-                            </p>
-                        </div>
-                    </div>
+                  
                     <div class="service-single style-3 style-5 mt-30 wow zoomIn" data-wow-delay=".5s">
                         <i class="icon-gift1"></i>
                         <div class="service-single-brief">
                             <h4><span>Promotions</span></h4>
                             <p>Add coupons to specific roles, or do a store wide sale. Pick your coupon code, the discount amount,
                                 timeline and expiry. You're in control!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="service-single style-3 style-5 mt-50 mt-sm-0 wow zoomIn" data-wow-delay=".4s">
+                        <i class="ti-announcement"></i>
+                        <div class="service-single-brief">
+                            <h4><span>Fraud Protection</span></h4>
+                            <p>Beastly Bot will monitor each payment for chargebacks and disputes to prevent fraud, and file proof with bank accordingly.
                             </p>
                         </div>
                     </div>
@@ -265,6 +266,46 @@
     </div>
     <!--services ends-->
 
+
+    <!--testimonial and records start-->
+		<div class="testimonial-and-records pt-70 pt-sm-78 pb-100 pb-sm-75">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="section-title mb-40">
+							<h2><span>Your Shop. Your Payments.</span></h2>
+						</div>
+						<div class="service-single style-2 wow fadeInUp" data-wow-delay=".3s">
+                                <i class="icon-discord"></i>
+                                <div class="service-single-brief">
+                                    <h4><span>Full Storefront Included</span></h4>
+                                    <p>Get a FREE super clean and easy store front. With your server icon, description. Your store will be pro!</p>
+                                </div>
+                            </div>
+                            <div class="service-single style-2 wow fadeInUp" data-wow-delay=".3s">
+                                <i class="ti-bar-chart"></i>
+                                <div class="service-single-brief">
+                                    <h4><span>Grow Your Income & MRR</span></h4>
+                                    <p>With features like weekly average, promotions, refund rules, custom subscription cycles & more!</p>
+                                </div>
+                            </div>
+                            <div class="service-single style-2 wow fadeInUp" data-wow-delay=".3s">
+                                <i class="icon-gift"></i>
+                                <div class="service-single-brief">
+                                    <h4><span>Customers Love It</span></h4>
+                                    <p>Being able to select select subscription duration and pay with Stripe, makes it a customers choice.</p>
+                                </div>
+                            </div>
+					</div>
+					<div class="col-lg-6">
+						<div class=" wow fadeIn" data-wow-delay=".3s">
+							<img src="{{ asset('site/assets/images/Screenshot-Your-StoreFront.png') }}" alt="" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    <!--testimonial and records end-->
 
     <!--testimonial and records start--><!--
 		<div class="testimonial-and-records pt-70 pt-sm-78 pb-100 pb-sm-75">

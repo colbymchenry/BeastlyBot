@@ -17,6 +17,7 @@ class StripeConnectController extends Controller
 
     public function connect()
     {
+        
         $code = \request('code');
 
         // if there is an error connecting to Stripe, abort and let user know
@@ -31,11 +32,11 @@ class StripeConnectController extends Controller
         $user = auth()->user();
 
         $stripe_account = StripeHelper::getAccountFromStripeConnect($code);
-        if ($stripe_account->country == 'US' && $user->stripe_express_id == null) {
+        if ($stripe_account->country == 'US' && $user->StripeConnect->express_id == null) {
             $user->StripeConnect->express_id = $stripe_account->id;
             $user->StripeConnect->save();
             AlertHelper::alertSuccess('Stripe account created! You can now accept payments.');
-            return redirect('/dashboard?open-servers=true');
+            return redirect('/servers');
         } else {
             AlertHelper::alertError('This is not a US account or you have already connected an account.');
             return redirect('/dashboard');

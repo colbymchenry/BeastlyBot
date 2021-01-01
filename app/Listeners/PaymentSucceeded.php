@@ -67,9 +67,9 @@ class PaymentSucceeded implements ShouldQueue
                     $subscribers_active = $stats->data['subscribers']['active'];
                     $subscribers_total = $stats->data['subscribers']['total'];
 
-                    if($subscribers_active >= 1000){
+                    if($subscribers_active >= 100){
                         $level = 1;
-                    }elseif($subscribers_active >= 100){
+                    }elseif($subscribers_active >= 10){
                         $level = 2;
                     }else{
                         $level = 3;

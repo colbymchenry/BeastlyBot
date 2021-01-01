@@ -373,26 +373,33 @@ class ServerController extends Controller {
             return response()->json(['success' => false, 'msg' => 'You are not the owner of this server.']);
         }else {
 
-            if(!\auth()->user()->getStripeHelper()->hasActiveExpressPlan()){
-                //return response()->json(['success' => false]);
-                return response()->json(['success' => false, 'msg' => 'You cannot accept payments because you do not have an active plan.']);
-            } else{
-                $shop = DiscordStore::where('id', $id)->first();
-                /*
-                if(\auth()->user()->error == '2'){
-                    return response()->json(['success' => false, 'msg' => 'Please pay partner invoice to go Live.']);
-                }*/
-                if($live === "Live"){
-                    $shop->live = true;
-                    #$shop->owner_id = (\auth()->user()->id);
-                }
-                else{
-                    $shop->live = false;
-                }
-                $shop->save();
-                return response()->json(['success' => true]);
-            }
+            // check if stripe express user
+           /* $owner_array = \App\User::where('id', (DiscordStore::where('guild_id', $id)->first()->user_id))->first();
+            if(!$owner_array->getStripeHelper()->isExpressUser()){
+                return response()->json(['success' => false, 'msg' => 'StripeError']);
 
+            }else{*/
+                if(!\auth()->user()->getStripeHelper()->hasActiveExpressPlan()){
+                    //return response()->json(['success' => false]);
+                    return response()->json(['success' => false, 'msg' => 'You cannot accept payments because you do not have an active plan.']);
+                } else{
+                    $shop = DiscordStore::where('id', $id)->first();
+                    /*
+                    if(\auth()->user()->error == '2'){
+                        return response()->json(['success' => false, 'msg' => 'Please pay partner invoice to go Live.']);
+                    }*/
+                    if($live === "Live"){
+                        $shop->live = true;
+                        #$shop->owner_id = (\auth()->user()->id);
+                    }
+                    else{
+                        $shop->live = false;
+                    }
+                    $shop->save();
+                    return response()->json(['success' => true]);
+                }
+
+           // }
         }
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DiscordStore;
 use App\ProductRole;
 use App\Ban;
+use App\StripeConnect;
 use Illuminate\Support\Facades\Cache;
 
 use App\Products\DiscordRoleProduct;
@@ -21,6 +22,13 @@ class ProductController extends Controller {
 
     public function product(Request $request) {
         $interval_cycle = $request['interval_cycle'];
+
+        // check if stripe express user
+        $owner_array = \App\User::where('id', (DiscordStore::where('guild_id', $request['guild_id'])->first()->user_id))->first();
+        if(!$owner_array->getStripeHelper()->isExpressUser()){
+            return response()->json(['success' => false, 'msg' => 'StripeError']);
+        }
+
 
         try {
             // find the product type to initiate

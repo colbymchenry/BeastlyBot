@@ -78,15 +78,34 @@ $(document).on('click', '.btn_save-roles', function (e) {
                     //switchery.enable();
                     if (!msg['success']) {
                         //$('.js-switch').click();
-                        Swal.fire({
-                            title: 'Failure',
-                            text: msg['msg'],
-                            type: 'warning',
-                            showCancelButton: false,
-                            showConfirmButton: true,
-                            target: document.getElementById('tab-content')
-                        });
-                        $('#icon_save-roles').removeClass('wb-minus wb-refresh spinning').addClass('wb-alert')
+                        if(msg['msg'] != 'StripeError'){
+                            Swal.fire({
+                                title: 'Failure',
+                                text: msg['msg'],
+                                type: 'warning',
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                target: document.getElementById('tab-content')
+                            });
+                            $('#icon_save-roles').removeClass('wb-minus wb-refresh spinning').addClass('wb-alert')
+                        }else{
+                            Swal.fire({
+                                title: 'Connect Payout Method',
+                                text: "Before we do that, lets connect your bank to get paid.",
+                                type: 'info',
+                                showCancelButton: true,
+                                showConfirmButton: true,
+                               // target: document.getElementById('tab-content')
+                               confirmButtonText: "Get Paid",
+                            }).then(result => {
+                                console.log(result);
+                                if(result.value == true){
+                                    window.location.replace("{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&email=' . auth()->user()->getDiscordHelper()->getEmail() . '&client_id=' . env('STRIPE_CLIENT_ID') }}");
+                                }
+                                $('#toggle-product_' + guild_id + '_' + role_id).removeClass('disabled').attr("disabled", false);
+                                $('#icon_save-roles').removeClass('wb-minus wb-refresh spinning').addClass('wb-alert')
+                            });
+                        }
                     } else {
                         //switchery.enable();
                         if (msg['active']) {
@@ -129,7 +148,7 @@ $(document).on('click', '.btn_save-roles', function (e) {
 
                     }
                     //clicked = false;
-                    // $('#toggle-product_' + guild_id + '_' + role_id).removeClass('disabled').attr("disabled", false);
+                     $('#toggle-product_' + guild_id + '_' + role_id).removeClass('disabled').attr("disabled", false);
                 });
 
             // clicked = true;

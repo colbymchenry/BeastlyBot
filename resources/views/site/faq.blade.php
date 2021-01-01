@@ -73,7 +73,7 @@
 								<div id="collapseOneTwo" class="collapse" aria-labelledby="headingOneTwo" data-parent="#accordion">
 									<div class="card-body">
 								
-										<p>After your 30-day free trial keeping a store Live is $25/month which you should easily make from us. Fees are as low as 5% per transaction, starting at 15% until 10 active subscribers. We reward your efforts in being a fantastic business owner!</p>
+										<p>After your 30-day free trial keeping a store Live is $25/month which you should easily make from us. Fees are as low as 5% per transaction, starting at 15% until 10 active subscribers - and we pay Stripe fees ;) You are rewarded with efforts in being a fantastic business owner!</p>
 									</div>
 								</div>
 							</div>

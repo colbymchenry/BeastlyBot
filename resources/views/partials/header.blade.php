@@ -149,7 +149,41 @@
                             </a>
                         </li>
                     @else
+                    @if(\App\DiscordStore::where('user_id', auth()->user()->id)->exists())
+                    <li class="dropdown site-menu-item {{ Request::is('servers') ? 'active' : '' }}">
+                            <a data-toggle="dropdown" href="/servers">
+                                <i class="site-menu-icon icon-shop" aria-hidden="true"></i>
+                                <span class="site-menu-title">Servers</span>
+                            </a>
+                        </li>
+                    @else
+
                     <li class="dropdown site-menu-item has-sub">
+                        <a href="javascript:void(0)" data-dropdown-toggle="false">
+                            <i class="site-menu-icon icon-shop" aria-hidden="true"></i>
+                            <span class="site-menu-title">Create Shop</span>
+                            <span class="site-menu-arrow"></span>
+                        </a>
+                        <ul class="site-menu-sub">
+                            <li class="site-menu-item">
+                                <button type="button" class="btn btn-primary btn-block rounded-0 ladda-button" id="tour_connect-stripe"
+                                    onclick="window.open('{{ 'https://discordapp.com/oauth2/authorize?client_id=' . env('DISCORD_CLIENT_ID') . '&scope=bot&permissions=' . env('DISCORD_BOT_PERMISSIONS') }}')"
+                                    data-style="slide-up" data-plugin="ladda">
+                                    <i class="icon wb-info-circle l-up" aria-hidden="true"
+                                        data-plugin="webuiPopover"
+                                        data-content="&lt;p&gt;@To create a shop add BeastlyBot to your Discord server.&lt;/p&gt;" data-trigger="hover"
+                                        data-animation="pop"></i>
+                                    <i class="icon-discord ladda-label" aria-hidden="true"></i>
+                                    <br>
+                                    <span class="ladda-label">Connect Bot</span>
+                                    <span class="ladda-spinner"></span>
+                                </button>
+                            </li>
+                        </ul>
+                    </li>
+
+                    @endif
+                    {{--<li class="dropdown site-menu-item has-sub">
                         <a href="javascript:void(0)" data-dropdown-toggle="false">
                             <i class="site-menu-icon icon-shop" aria-hidden="true"></i>
                             <span class="site-menu-title">Create Shop</span>
@@ -171,7 +205,7 @@
                                 </button>
                             </li>
                         </ul>
-                    </li>
+                    </li>--}}
                     @endif
                     <!--<li class="site-menu-category">Help</li>
                     <li class="site-menu-item has-sub">

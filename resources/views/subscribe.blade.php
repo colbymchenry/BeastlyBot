@@ -51,8 +51,8 @@
                 @endif
             </a>
             <div class="font-size-50 blue-grey-100 mb--5" id="guild_name">{{ $guild->name }}</div>
-            <div class="font-size-16 blue-grey-100 w-400 mx-auto hidden-sm-down">{{ Str::limit(App\DiscordStore::where('guild_id', $guild_id)->first()->description, 100) }}</div>
-            <span><button type="button" class="btn btn-sm btn-round btn-dark btn-icon mb-10" id="btn_copy-url" data-toggle="tooltip" data-original-title="Copy Link" data-placement="right"><i class="wb-link"></i></button></span>
+            <div class="font-size-16 blue-grey-100 w-400 mx-auto hidden-md-down">{{ Str::limit(App\DiscordStore::where('guild_id', $guild_id)->first()->description, 100) }}</div>
+            <span><button type="button" class="btn btn-sm btn-round btn-dark btn-icon mb-10 mt-20 mt-md-10 mt-lg-15" id="btn_copy-url" data-toggle="tooltip" data-original-title="beastly.store/{{ App\DiscordStore::where('guild_id', $guild_id)->value('url') }}" data-placement="right"><i class="wb-link"></i></button></span>
         </div>
     </div>
     <div class="container">
@@ -95,7 +95,7 @@
                                                 </div>
                                                 <div class="w-100 hidden-sm-down">
                                                     <button data-url="/slide-product-purchase/{{ $guild_id }}/{{ $role->id }}" data-toggle="slidePanel" type="button"
-                                                    class="btn btn-sm btn-success float-right">Select <i class="icon wb-arrow-right ml-2" ></i>
+                                                    class="btn btn-sm btn-success float-right">Subscribe <i class="icon wb-arrow-right ml-2" ></i>
                                                     </button>
                                                 </div>
                                                 <div class="w-20 hidden-md-up">
@@ -164,7 +164,7 @@ $(function() {
      $('html .tooltip-inner').text('Copied!')
     setTimeout(function(){
         $('#btn_copy-url').attr('data-original-title', 'Copy Link').addClass('btn-dark').removeClass('btn-primary');
-        $('html .tooltip-inner').text('Copy Link')
+        $('html .tooltip-inner').text("beastly.store/{{ App\DiscordStore::where('guild_id', $guild_id)->value('url') }}")
     }, 1000);
    });
 });

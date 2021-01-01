@@ -97,8 +97,26 @@
         $('#live-switch, #test-switch').on('click', function() {
             $('#live-switch, #test-switch').attr('disabled', true);
             var live = $(this).data('status');
+        
+        @if(!auth()->user()->getStripeHelper()->isExpressUser())
 
-        @if(auth()->user()->getStripeHelper()->hasActiveExpressPlan())
+        Swal.fire({
+            title: 'Connect Payout Method',
+            text: "Before we do that, lets connect your bank to get paid.",
+            type: 'info',
+            showCancelButton: true,
+            showConfirmButton: true,
+           // target: document.getElementById('tab-content')
+           confirmButtonText: "Get Paid",
+        }).then(result => {
+            console.log(result);
+            if(result.value == true){
+                window.location.replace("{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&email=' . auth()->user()->getDiscordHelper()->getEmail() . '&client_id=' . env('STRIPE_CLIENT_ID') }}");
+            }
+        });
+
+
+        @elseif(auth()->user()->getStripeHelper()->hasActiveExpressPlan())
             Toast.fire({
                 title: 'Going ' + live + ' Mode...',
                 // type: 'info',

@@ -2,7 +2,7 @@ FROM php:7.4.1-apache
 
 USER root
 
-WORKDIR /var/www/html/
+WORKDIR /var/www/html/beastlybot
 
 RUN apt-get update && apt-get install -y \
         libpng-dev \
@@ -32,5 +32,4 @@ COPY .docker/apache/store.conf /etc/apache2/sites-available/store.conf
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN chown -R www-data:www-data /var/www/html \
-    && a2enmod rewrite
+CMD php artisan serve --host=0.0.0.0 --port=80

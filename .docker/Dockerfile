@@ -1,4 +1,4 @@
-FROM php:7.4.1-apache
+FROM pensiero/apache-php-mysql:php7.4
 
 USER root
 
@@ -13,12 +13,14 @@ RUN apt-get update && apt-get install -y \
         zip \
         curl \
         unzip \
-    && docker-php-ext-configure gd \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install mysqli \
-    && docker-php-ext-install zip \
-    && docker-php-source delete
+        libapache2-mod-php7.4 \
+        php-gd \
+        php-mbstring \
+        php-xml \
+        php-mysql \
+        php-bcmath \
+        php-json \
+        php-zip
 
 COPY .docker/apache/beastly.conf /etc/apache2/sites-available/beastly.conf
 COPY .docker/apache/beastlybot-le-ssl.conf /etc/apache2/sites-available/beastlybot-le-ssl.conf

@@ -2,6 +2,8 @@ FROM pensiero/apache-php-mysql:php7.4
 
 USER root
 
+COPY . /var/www/html/beastlybot
+
 WORKDIR /var/www/html/beastlybot
 
 RUN apt-get update && apt-get install -y \
@@ -36,6 +38,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN rm /etc/apache2/sites-available/000-default.conf
 
 RUN service apache2 start
-RUN a2ensite *
 
 CMD php artisan serve --host=0.0.0.0 --port=8000
+
+EXPOSE 8000

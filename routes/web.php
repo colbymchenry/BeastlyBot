@@ -47,8 +47,6 @@ Route::get('/slide-help-creating-a-promotion', function () {
 Route::get('/impersonate/{id}', 'UserController@impersonate');
 
 require_once __DIR__ . "/section/site.php";
-
-
 require_once __DIR__ . "/section/auth.php";
 require_once __DIR__ . "/section/help.php";
 

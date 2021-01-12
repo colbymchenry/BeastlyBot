@@ -48,11 +48,11 @@
                                 manage payments.</p>
                         </div>
                         <div class="banner-action wow fadeInUp" data-wow-delay=".3s" style="visibility:hidden">
-                            @auth
+                            <!-- @auth
                                 <a href="https://discord.beastlybot.com/dashboard" class="btn-common radius-50 btn-pink mr-20">Dashboard</a>
                             @else
                                 <a href="https://discord.beastlybot.com/dashboard?start" class="btn-common radius-50 btn-pink mr-20">Create Shop</a>
-                            @endauth
+                            @endauth -->
                         </div>
                     </div>
                 </div>

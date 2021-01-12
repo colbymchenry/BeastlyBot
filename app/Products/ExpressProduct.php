@@ -6,6 +6,7 @@ use App\AlertHelper;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\StripeHelper;
 
 class ExpressProduct extends Product
 {
@@ -65,7 +66,7 @@ class ExpressProduct extends Product
     public function changePlan(string $new_plan_id)
     {
         // Any time accessing Stripe API this snippet of code must be ran above any preceding API calls
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
  
         $stripe_helper = auth()->user()->getStripeHelper();
 
@@ -98,7 +99,7 @@ class ExpressProduct extends Product
     }
 
     public function getStripePlan() {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         return \Stripe\Plan::retrieve($this->plan_id);
     }
 

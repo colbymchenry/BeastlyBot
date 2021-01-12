@@ -55,7 +55,7 @@
 
 @auth
     <script type="text/javascript">
-        let stripe = Stripe('{{ env('STRIPE_CLIENT_PUBLIC') }}');
+        let stripe = Stripe('{{ \App\StripeHelper::getStripePublic() }}');
 
         function timeDiff( tstart, tend ) {
             var diff = Math.floor((tend - tstart) / 1000), units = [

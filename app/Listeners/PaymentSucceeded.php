@@ -15,6 +15,7 @@ use \App\Stat;
 use RestCord\DiscordClient;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use \App\StripeHelper;
 
 class PaymentSucceeded implements ShouldQueue
 {
@@ -174,7 +175,7 @@ class PaymentSucceeded implements ShouldQueue
     }
 
     private function cancelRefund($webhookCall) {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         try {
             \Stripe\Refund::create([
@@ -190,7 +191,7 @@ class PaymentSucceeded implements ShouldQueue
         }
 
         $subscription_id = $webhookCall->payload['data']['object']['lines']['data'][0]['subscription'];
-        $stripe = new \Stripe\StripeClient(env('STRIPE_CLIENT_SECRET'));
+        $stripe = StripeHelper::getStripeClient();
 
         try {
             $stripe->subscriptions->cancel($subscription_id, []);

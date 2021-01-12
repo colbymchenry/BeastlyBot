@@ -26,6 +26,6 @@ Route::get('/dashboard', function() {
     }
 });
 
-Route::get('/', function() {
-    return redirect()->to('https://beastlybot.com');
-});
+// Route::get('/', function() {
+//     return redirect()->to('https://beastlybot.com');
+// });

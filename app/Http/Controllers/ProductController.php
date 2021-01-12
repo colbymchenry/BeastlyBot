@@ -6,6 +6,7 @@ use App\DiscordStore;
 use App\ProductRole;
 use App\Ban;
 use App\StripeConnect;
+use App\StripeHelper;
 use Illuminate\Support\Facades\Cache;
 
 use App\Products\DiscordRoleProduct;
@@ -41,7 +42,7 @@ class ProductController extends Controller {
                 break;
             }
 
-            \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+            StripeHelper::setApiKey();
             if($request['action'] == 'delete') {
                 return $product->delete($request);
             } else {
@@ -76,7 +77,7 @@ class ProductController extends Controller {
                 break;
             }
 
-            \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+            StripeHelper::setApiKey();
             if($request['action'] == 'delete') {
                 return $plan->delete($request);
             } else {
@@ -101,7 +102,7 @@ class ProductController extends Controller {
     public static function getPricesForRole($guild_id, $role_id) {
         $prices = [];
         // Any time accessing Stripe API this snippet of code must be ran above any preceding API calls
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         foreach ([1, 3, 6, 12] as $duration) {
             $discord_plan = new DiscordPlan(new DiscordRoleProduct($guild_id, $role_id, $duration), 'month', $duration);
             $key = 'plan_' . $discord_plan->getStripeID();

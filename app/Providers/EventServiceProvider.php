@@ -22,31 +22,31 @@ class EventServiceProvider extends ServiceProvider
 
     protected $listen = [
         'stripe-webhooks::invoice.payment_succeeded' => [
-            \App\Listeners\PaymentSucceeded::class,
+            \App\Webhooks\Stripe\PaymentSucceeded::class,
         ],
         'stripe-webhooks::invoice.payment_failed' => [
-            \App\Listeners\PaymentFailed::class,
+            \App\Webhooks\Stripe\PaymentFailed::class,
         ],
         'stripe-webhooks::customer.subscription.deleted' => [
-            \App\Listeners\SubscriptionCanceled::class,
+            \App\Webhooks\Stripe\SubscriptionCanceled::class,
         ],
         'stripe-webhooks::subscription_schedule.expiring' => [ // TODO: Need to test if this works
-            \App\Listeners\SubscriptionExpired::class,
+            \App\Webhooks\Stripe\SubscriptionExpired::class,
         ],
         'stripe-webhooks::charge.dispute.created' => [ 
-            \App\Listeners\DisputeCreated::class,
+            \App\Webhooks\Stripe\DisputeCreated::class,
         ],
         'stripe-webhooks::charge.dispute.closed' => [
-            \App\Listeners\DisputeClosed::class,
+            \App\Webhooks\Stripe\DisputeClosed::class,
         ],
         'stripe-webhooks::charge.dispute.updated' => [
-            \App\Listeners\DisputeUpdated::class,
+            \App\Webhooks\Stripe\DisputeUpdated::class,
         ],
         'stripe-webhooks::charge.dispute.funds_reinstated' => [
-            \App\Listeners\DisputeFundsReinstated::class,
+            \App\Webhooks\Stripe\DisputeFundsReinstated::class,
         ],
         'stripe-webhooks::charge.dispute.funds_withdrawn' => [
-            \App\Listeners\DisputeFundsWithdrawn::class,
+            \App\Webhooks\Stripe\DisputeFundsWithdrawn::class,
         ],
     ];
 

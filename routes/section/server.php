@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use App\StripeHelper;
 
 Route::post('/refresh-roles/{guild_id}', function($guild_id) {
     Cache::forget('roles_' . $guild_id);
@@ -39,7 +40,7 @@ Route::get('/slide-special-roles-settings/{guild_id}/{role_id}/{type}/{discord_i
 Route::get('/slide-roles-prices/{guild_id}/{role_id}', 'ServerController@getSlideRolePrices');
 
 Route::get('/slide-server-member', function () {
-    \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+    StripeHelper::setApiKey();
     $discord_helper = new \App\DiscordHelper(\App\User::where('id', \request('user_id'))->first());
     $discord_store = \App\DiscordStore::where('id', \request('store_id'))->first();
     $invoices = [];

@@ -54,7 +54,7 @@ class PayoutSchedule extends Command
 
             $stripe_connect = StripeConnect::find($sub_eligable->stripe_connect_id);
 
-            \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+            StripeHelper::setApiKey();
             try {
                 // Retrieve expressAccount
                 $expressAccount = \Stripe\Account::retrieve(

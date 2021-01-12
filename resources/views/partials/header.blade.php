@@ -121,11 +121,7 @@
                         </a>
                     </li> -->
                     <li class="site-menu-category">SHOP
-                        @if(!auth()->user()->getStripeHelper()->hasExpressPlan() && auth()->user()->StripeConnect->express_id != null)
-                        <a href="#" class="site-menu-badge" data-toggle="modal" data-target="#partnerPricingModal">
-                            <span class="badge badge-pill badge-success text-capitalize mt-10 responsive-hide">Go Live</span>
-                        </a>
-                        @elseif(auth()->user()->getStripeHelper()->hasExpressPlan())
+                        @if(auth()->user()->StripeConnect->express_id != null)
                         <a href="#" class="site-menu-badge" data-toggle="slidePanel" data-url="/slide-payout">
                             <span class="badge badge-pill badge-primary text-capitalize mt-10">Payout</span>
                         </a>
@@ -192,7 +188,7 @@
                         <ul class="site-menu-sub">
                             <li class="site-menu-item">
                                 <button type="button" class="btn btn-primary btn-block rounded-0 ladda-button" id="tour_connect-stripe"
-                                    onclick="window.location.href = '{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&client_id=' . env('STRIPE_CLIENT_ID') }}&state={{ csrf_token() }}';"
+                                    onclick="window.location.href = '{{ \App\StripeHelper::getConnectURL() }}';"
                                     data-style="slide-up" data-plugin="ladda">
                                     <i class="icon wb-info-circle l-up" aria-hidden="true"
                                         data-plugin="webuiPopover"

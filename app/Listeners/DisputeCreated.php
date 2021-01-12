@@ -18,13 +18,13 @@ use App\Ban;
 use RestCord\DiscordClient;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use \App\StripeHelper;
 
 class DisputeCreated implements ShouldQueue
 {
     public function handle(WebhookCall $webhookCall)
     {
-        //\Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
-        $stripe = new \Stripe\StripeClient(env('STRIPE_CLIENT_SECRET'));
+        $stripe = StripeHelper::getStripeClient();
 
         $object = $webhookCall->payload['data']['object'];
 

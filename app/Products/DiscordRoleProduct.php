@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use RestCord\DiscordClient;
 use App\DiscordHelper;
+use App\StripeHelper;
 
 class DiscordRoleProduct extends Product
 {
@@ -72,7 +73,7 @@ class DiscordRoleProduct extends Product
     public function create(Request $request) {
         //$this->createProduct();
         if($this->getStripeProduct() == null) {
-            \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+            StripeHelper::setApiKey();
             try {
                 $this->stripe_product_obj = \Stripe\Product::retrieve($this->getStripeID());
                 Cache::put('product_' . $this->getStripeID(), $this->stripe_product_obj, 60 * 10);
@@ -103,7 +104,7 @@ class DiscordRoleProduct extends Product
     public function update(Request $request) {
        // $this->createProduct();
        if($this->getStripeProduct() == null) {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         try {
             $this->stripe_product_obj = \Stripe\Product::retrieve($this->getStripeID());
             Cache::put('product_' . $this->getStripeID(), $this->stripe_product_obj, 60 * 10);
@@ -170,13 +171,13 @@ class DiscordRoleProduct extends Product
     }
 
     public function getStripePlan() {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         return \Stripe\Plan::retrieve($this->getStripeID() . '_' . $this->billing_cycle . '_r');
     }
 
     public function createProduct() {
         if($this->getStripeProduct() == null) {
-            \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+            StripeHelper::setApiKey();
             try {
                 $this->stripe_product_obj = \Stripe\Product::retrieve($this->getStripeID());
                 Cache::put('product_' . $this->getStripeID(), $this->stripe_product_obj, 60 * 10);

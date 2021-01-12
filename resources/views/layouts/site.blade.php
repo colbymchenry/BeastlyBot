@@ -194,7 +194,7 @@
                                 </ul>
                             </nav>
                         </div>
-                        <button type="button" class="btn radius-50 help-line style-2" onclick="window.location.href = 'https\:\/\/discord.beastlybot.com\/dashboard' ">
+                        <!-- <button type="button" class="btn radius-50 help-line style-2" onclick="window.location.href = 'https\:\/\/discord.beastlybot.com\/dashboard' ">
                             {{--@auth--}}
                             <a href="https://discord.beastlybot.com/dashboard">
                                 <i class="icon-discord"></i>
@@ -204,7 +204,7 @@
                                 <i class="icon-discord"></i> Login<span
                                         class="ds-sm-none"> with Discord</span></a>
                             @endauth--}}
-                        </button>
+                        </button> -->
                         <!--<div class="site-lang in-right">
                             <ul>
                                 <li>

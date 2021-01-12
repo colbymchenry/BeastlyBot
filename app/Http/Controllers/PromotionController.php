@@ -8,6 +8,7 @@ use App\Http\PayPal\PayPalRecurring;
 use App\PricingTable;
 use App\Promotion;
 use App\User;
+use App\StripeHelper;
 use Discord\OAuth\Discord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,7 @@ class PromotionController extends Controller {
     // TODO: Cache this shit
     public function getPromotionsPage() {
         // Any time accessing Stripe API this snippet of code must be ran above any preceding API calls
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         $coupons = array();
 
@@ -82,7 +83,7 @@ class PromotionController extends Controller {
             return response()->json(['success' => false, 'msg' => 'Invalid promotional value.']);
 
         // Any time accessing Stripe API this snippet of code must be ran above any preceding API calls
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         try {
             $stripe_promotion = \Stripe\Coupon::retrieve($code);
@@ -134,7 +135,7 @@ class PromotionController extends Controller {
 
     public function deleteCoupon($id) {
         // Any time accessing Stripe API this snippet of code must be ran above any preceding API calls
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         $db_coupon = null;
         if(Coupon::where('id', $id)->exists()) {

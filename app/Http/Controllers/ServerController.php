@@ -21,6 +21,7 @@ use App\PaidOutInvoice;
 use App\Stat;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use App\StripeHelper;
 
 class ServerController extends Controller {
 
@@ -129,7 +130,7 @@ class ServerController extends Controller {
         $subscriptions = Subscription::where('store_id', $discord_store->id)->orderBy('updated_at', 'DESC')->paginate(5);
 
         // get all the invoices for payments tab
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         $invoices = [];
     
         foreach(\App\Subscription::where('store_id', $discord_store->id)->get() as $subscription) {
@@ -168,7 +169,7 @@ class ServerController extends Controller {
 
         $status_roles = array();
         // Any time accessing Stripe API this snippet of code must be ran above any preceding API calls
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         try {
             foreach ($roles as $role) {
                 try {
@@ -199,7 +200,7 @@ class ServerController extends Controller {
 
     public static function getSlideRoleSettings($guild_id, $role_id) {
         // Any time accessing Stripe API this snippet of code must be ran above any preceding API calls
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         \Log::info($role_id);
 
@@ -233,7 +234,7 @@ class ServerController extends Controller {
 
     public static function getSlideSpecialRoleSettings($guild_id, $role_id, $type, $discord_id) {
         // Any time accessing Stripe API this snippet of code must be ran above any preceding API calls
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         try {
             $product = \Stripe\Product::retrieve($guild_id . '_' . $role_id);
@@ -285,7 +286,7 @@ class ServerController extends Controller {
 
     /* ServerController: getDisputes */
     public function getDisputes(Request $request) {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         $id = $request['guild'];
         $guild = DiscordStore::where('guild_id', $id)->first();

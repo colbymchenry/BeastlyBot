@@ -100,7 +100,7 @@ $(document).on('click', '.btn_save-roles', function (e) {
                             }).then(result => {
                                 console.log(result);
                                 if(result.value == true){
-                                    window.location.replace("{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&email=' . auth()->user()->getDiscordHelper()->getEmail() . '&client_id=' . env('STRIPE_CLIENT_ID') }}");
+                                    window.location.replace("{{ \App\StripeHelper::getConnectURL() }}");
                                 }
                                 $('#toggle-product_' + guild_id + '_' + role_id).removeClass('disabled').attr("disabled", false);
                                 $('#icon_save-roles').removeClass('wb-minus wb-refresh spinning').addClass('wb-alert')

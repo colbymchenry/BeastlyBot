@@ -3,6 +3,7 @@
 namespace App\Products\Plans;
 
 use Illuminate\Support\Facades\Cache;
+use App\StripeHelper;
 //use App\Products\ProductMsgException;
 
 class DiscordPlan extends Plan
@@ -12,7 +13,7 @@ class DiscordPlan extends Plan
     {
         $this->product->createProduct();
 
-        $stripe = new \Stripe\StripeClient(env('STRIPE_CLIENT_SECRET'));
+        $stripe = StripeHelper::getStripeClient();
         
         if(! \App\DiscordStore::where('guild_id', $this->product->guild_id)->exists()) {
             $this->product->discord_store = DiscordStore::create([

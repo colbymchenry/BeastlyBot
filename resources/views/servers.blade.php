@@ -23,7 +23,7 @@
       {{--  @else
         <div class="page-header-actions add-pulse">
             <a class="btn btn-primary btn-round"
-               href="{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&client_id=' . env('STRIPE_CLIENT_ID') }}">
+               href="{{ \App\StripeHelper::getConnectURL() }}">
                 Connect Stripe
                 <i class="icon-stripe ml-2" aria-hidden="true"></i>
             </a>

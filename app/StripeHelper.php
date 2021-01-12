@@ -21,7 +21,7 @@ class StripeHelper
         if(Cache::has($cache_key)) {
             return Cache::get($cache_key);
         } else {
-            \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+            StripeHelper::setApiKey();
             $stripe_subs = \Stripe\Subscription::all(['customer' => $this->user->StripeConnect->customer_id, 'status' => $status, 'limit' => 100]);
             Cache::put($cache_key, $stripe_subs, 60 * 10);
         }
@@ -30,7 +30,7 @@ class StripeHelper
     }
 
     public function ownsSubscription($sub_id) {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         $stripe_sub = \Stripe\Subscription::retrieve(
             $sub_id
             []
@@ -79,7 +79,7 @@ class StripeHelper
 
     public function getStripeEmail(): string {
         if (Session::has('stripe_email')) return Session::get('stripe_email');
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         try {
             Session::put('stripe_email', $this->getCustomerAccount()->email);
@@ -91,7 +91,7 @@ class StripeHelper
     }
 
     public function getCustomerAccount(): \Stripe\Customer {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         try {
             return \Stripe\Customer::retrieve($this->user->StripeConnect->customer_id);
         } catch (ApiErrorException $e) {
@@ -101,12 +101,12 @@ class StripeHelper
 
     public function isSubscriptionMonthly(): bool {
         $active_plan = $this->getExpressSubscription();
-        return $active_plan !== null && $active_plan->id == env('LIVE_MONTHLY_PLAN_ID');
+        return true;
     }
 
     public function isSubscriptionYearly(): bool {
         $active_plan = $this->getExpressSubscription();
-        return $active_plan !== null && $active_plan->id == env('LIVE_YEARLY_PLAN_ID');
+        return true;
     }
 
     public function getExpressSubscription() {
@@ -123,17 +123,16 @@ class StripeHelper
     }
 
     public function hasExpressPlan(): bool {
-        return $this->getExpressSubscription() != null;
+        return true;
     }
 
     public function hasActiveExpressPlan(): bool {
-        $subscription = $this->getExpressSubscription();
-        return $subscription != null && $subscription->status == 'active';
+        return true;
     }
 
     public function getBalance() {
         if(Cache::has('balance_' . $this->user->StripeConnect->express_id)) return Cache::get('balance_' . $this->user->StripeConnect->express_id, 0);
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         $balance = \Stripe\Balance::retrieve(
             ['stripe_account' => $this->user->StripeConnect->express_id]
         );
@@ -142,13 +141,14 @@ class StripeHelper
     }
 
     public function getLoginURL() {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
-        return $this->isExpressUser() ? \Stripe\Account::createLoginLink($this->user->StripeConnect->express_id)->url : null;
+        // StripeHelper::setApiKey();
+        // return $this->isExpressUser() ? \Stripe\Account::createLoginLink($this->user->StripeConnect->express_id)->url : null;
+        return "";
     }
 
     public static function getAccountFromStripeConnect(string $code): \Stripe\Account {
         $token_request_body = array(
-            'client_secret' => env('STRIPE_CLIENT_SECRET'),
+            'client_secret' => env('APP_DEBUG') == 'true' ? env('STRIPE_CLIENT_SECRET_TEST') : env('STRIPE_CLIENT_SECRET'),
             'grant_type' => 'authorization_code',
             'client_id' => env('STRIPE_CLIENT_ID'),
             'code' => $code,
@@ -162,9 +162,30 @@ class StripeHelper
         $resp = json_decode(curl_exec($req), true);
         curl_close($req);
 
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         return \Stripe\Account::retrieve($resp['stripe_user_id']);
     }
+
+    public static function setApiKey() {
+        \Stripe\Stripe::setApiKey(env('APP_DEBUG') == 'true' ? env('STRIPE_CLIENT_SECRET_TEST') : env('STRIPE_CLIENT_SECRET'));
+    }
+
+    public static function getStripeClient(): \Stripe\StripeClient {
+        return new \Stripe\StripeClient(env('APP_DEBUG') == 'true' ? env('STRIPE_CLIENT_SECRET_TEST') : env('STRIPE_CLIENT_SECRET'));
+    }
+
+    public static function getClientID() {
+        return env('APP_DEBUG') == 'true' ? env('STRIPE_CLIENT_ID_TEST') : env('STRIPE_CLIENT_ID');
+    }
+
+    public static function getStripePublic() {
+        return env('APP_DEBUG') == 'true' ? env('STRIPE_CLIENT_PUBLIC_TEST') : env('STRIPE_CLIENT_PUBLIC_TEST');
+    }
+
+    public static function getConnectURL() {
+        return "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" . StripeHelper::getClientID() . "&scope=read_write";
+    }
+
 
 }

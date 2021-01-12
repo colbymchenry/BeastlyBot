@@ -2,10 +2,9 @@
 /node_discord_bot/node_modules
 /public/hot
 /public/storage
+/public/vendor
 /storage/*.key
 /vendor
-.env
-.env.backup
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

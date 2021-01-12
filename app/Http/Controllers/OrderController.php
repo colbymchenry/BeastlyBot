@@ -17,6 +17,7 @@ use App\User;
 use App\DiscordStore;
 use App\StripeConnect;
 use App\Ban;
+use App\StripeHelper;
 
 class OrderController extends Controller {
 
@@ -25,6 +26,7 @@ class OrderController extends Controller {
     }
 
     public function setup(Request $request) {
+        \Log::info("HERE");
         if (! auth()->user()->hasStripeAccount()) 
             return response()->json(['success' => false, 'msg' => 'You do not have a linked stripe account.']);
         $express_promo = NULL;
@@ -67,6 +69,7 @@ class OrderController extends Controller {
             'payment_method_types' => ['card'],
             'mode' => 'subscription',
             'subscription_data' => [
+                'application_fee_percent' => 5,
                 'items' => [[
                     'plan' => $product->getStripePlan()->id,
                     'quantity' => '1'
@@ -87,8 +90,8 @@ class OrderController extends Controller {
             $checkout_data['subscription_data']['coupon'] = $express_promo;
         }
         
-        $stripe = new \Stripe\StripeClient(env('STRIPE_CLIENT_SECRET'));
-        $session = $stripe->checkout->sessions->create($checkout_data);
+        $stripe = StripeHelper::getStripeClient();
+        $session = $stripe->checkout->sessions->create($checkout_data, array("stripe_account" => StripeConnect::where('user_id', $discord_store->user_id)->first()));
         
         return response()->json(['success' => true, 'msg' => $session->id]);
     }

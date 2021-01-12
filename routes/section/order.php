@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cache;
+use \App\StripeHelper;
 
 Route::get('/checkout-success', 'OrderController@checkoutSuccess');
 
@@ -16,7 +17,7 @@ Route::get('/slide-invoice', function() {
     if(Cache::has('invoice_' . $id)) {
         $invoice = Cache::get('invoice_' . $id);
     } else {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         try {
             $invoice = \Stripe\Invoice::retrieve($id);
             Cache::put('invoice_' . $id, $invoice, 60 * 10);

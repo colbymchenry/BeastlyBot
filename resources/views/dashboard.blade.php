@@ -259,7 +259,7 @@
                       </div>
                     </div>
                 </a>
-                <a href="{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&client_id=' . env('STRIPE_CLIENT_ID') }}" class="d-none card card-block btn btn-primary bg-blue-600 ladda-button"
+                <a href="{{ \App\StripeHelper::getConnectURL() }}" class="d-none card card-block btn btn-primary bg-blue-600 ladda-button"
                     id="btn_connect-stripe-block" data-style="slide-up" data-plugin="ladda">
                     <i class="icon wb-info-circle l-up text-white" aria-hidden="true"
                       data-plugin="webuiPopover"
@@ -353,7 +353,7 @@
                       <span class="ladda-spinner"></span>
                     </div>
                 </a>
-                {{--<a href="{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&client_id=' . env('STRIPE_CLIENT_ID') }}" class="d-none card card-block btn btn-primary bg-blue-600 ladda-button"
+                {{--<a href="{{ \App\StripeHelper::getConnectURL() }}" class="d-none card card-block btn btn-primary bg-blue-600 ladda-button"
                     id="btn_connect-stripe-block" data-style="slide-up" data-plugin="ladda">
                     <i class="icon wb-info-circle l-up text-white" aria-hidden="true"
                       data-plugin="webuiPopover"

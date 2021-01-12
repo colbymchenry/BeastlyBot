@@ -32,7 +32,7 @@ class UserController extends Controller {
         if(Cache::has('user_invoices_' . auth()->user()->id)) {
             $invoices = Cache::get('user_invoices_' . auth()->user()->id);
         } else {
-            \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+            StripeHelper::setApiKey();
 
             $invoices = \Stripe\Invoice::all([
                 'limit' => $num_of_invoices,
@@ -54,7 +54,7 @@ class UserController extends Controller {
 
     public function getPayoutSlide($stripe_account_id) {
 
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         if (auth()->user()->StripeConnect->express_id != $stripe_account_id && !Auth::user()->admin) return response()->json(['success' => false, 'msg' => 'You do not own this Stripe account.']);
 
@@ -121,7 +121,7 @@ class UserController extends Controller {
         $sub_id = $request['sub_id'];
         $end_now = $request['end_now'];
 
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         if(!\Auth::user()->getStripeHelper()->isSubscribedToID($sub_id)) {
             return response()->json(['success' => false, 'msg' => 'This is not your subscription. Contact support']);
@@ -169,7 +169,7 @@ class UserController extends Controller {
     }
 
     public function undoCancelSubscription(Request $request) {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
 
         $sub_id = $request['sub_id'];
@@ -225,7 +225,7 @@ class UserController extends Controller {
         Log::info($sub_id);
 
         // Any time accessing Stripe API this snippet of code must be ran above any preceding API calls
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         try {
             
@@ -461,7 +461,7 @@ class UserController extends Controller {
         $decision = "1";
         $ban = $request['ban'];
         // Any time accessing Stripe API this snippet of code must be ran above any preceding API calls
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         Log::info("test00");
         try {
             Log::info("test0");

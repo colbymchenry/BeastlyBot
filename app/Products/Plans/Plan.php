@@ -6,6 +6,7 @@ use App\Products\ProductMsgException;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
+use App\StripeHelper;
 
 abstract class Plan 
 {
@@ -27,7 +28,7 @@ abstract class Plan
                 $this->stripe_plan_obj = Cache::get('plan_' . $this->getStripeID());
             }
         } else {
-            \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+            StripeHelper::setApiKey();
             try {
                 $this->stripe_plan_obj = \Stripe\Plan::retrieve($this->getStripeID());
                 Cache::put('plan_' . $this->getStripeID(), $this->stripe_plan_obj, 60 * 10);
@@ -78,7 +79,7 @@ abstract class Plan
         Internally Stripe will continue to use the old plan for existing customers.
     */
     public function delete(Request $request) {
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
         try {
             if($this->getStripePlan() !== null) {
                 Cache::forget('plan_' . $this->getStripeID());

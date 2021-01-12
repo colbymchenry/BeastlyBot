@@ -5,6 +5,7 @@ namespace App\Products;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use App\StripeHelper;
 
 abstract class Product 
 {
@@ -21,7 +22,7 @@ abstract class Product
                 $this->stripe_product_obj = Cache::get('product_' . $this->getStripeID());
             }
         } else {
-            \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+            StripeHelper::setApiKey();
             try {
                 $this->stripe_product_obj = \Stripe\Product::retrieve($this->getStripeID());
                 Cache::put('product_' . $this->getStripeID(), $this->stripe_product_obj, 60 * 10);

@@ -44,7 +44,7 @@ class User extends Authenticatable
     }
 
     public function canAcceptPayments(): bool {
-        return $this->getStripeHelper()->isExpressUser() && $this->getStripeHelper()->hasExpressPlan();
+        return $this->getStripeHelper()->isExpressUser();
     }
 
 }

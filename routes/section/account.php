@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 #use App\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\StripeHelper;
 
 Route::group(['middleware' => ['auth', 'web']], function () {
     Route::view('/account/settings', 'account.settings');
@@ -59,7 +60,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 
     Route::get('/slide-account-subscription-settings', function () {
         $id = \request('id');
-        \Stripe\Stripe::setApiKey(env('STRIPE_CLIENT_SECRET'));
+        StripeHelper::setApiKey();
 
         $role_name = \request('role_name');
         $guild_name = \request('guild_name');

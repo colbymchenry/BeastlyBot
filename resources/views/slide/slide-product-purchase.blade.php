@@ -274,6 +274,7 @@
         }).done(function (msg) {
             if (msg['success']) {
                 swal.close();
+                console.log(msg['msg']);
                 stripe.redirectToCheckout({
                     sessionId: msg['msg']
                 }).then(function (result) {

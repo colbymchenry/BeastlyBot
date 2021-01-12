@@ -16,11 +16,11 @@
                 <div>
                 {{--@if(!auth()->user()->getStripeHelper()->isExpressUser())
                     <div class="list-group">
-                        <a class="list-group-item list-group-item-action flex-column align-items-start text-center pulse" href="{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&client_id=' . env('STRIPE_CLIENT_ID')  }}">
+                        <a class="list-group-item list-group-item-action flex-column align-items-start text-center pulse" href="{{ \App\StripeHelper::getConnectURL() }}">
                             <h4 class="list-group-item-heading mt-0 mb-5">Connect Stripe</h4>
                             <p class="mb-0">@lang('lang.connect_stripe')</p>
                             <p><button type="button" class="btn btn-primary btn-block mt-2 ladda-button"
-                                    onclick="window.location.href = '{{ 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=' . env('APP_URL') . '&client_id=' . env('STRIPE_CLIENT_ID')  }}';"
+                                    onclick="window.location.href = '{{ \App\StripeHelper::getConnectURL() }}';"
                                     data-style="slide-up" data-plugin="ladda">
                                     <i class="icon-stripe ladda-label" aria-hidden="true"></i>
                                     <br>

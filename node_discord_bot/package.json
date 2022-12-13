@@ -13,7 +13,7 @@
     "discord.js-commando": "^0.10.0",
     "dotenv": "^8.2.0",
     "erlpack": "github:discordapp/erlpack",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "flat-cache": "^2.0.1",
     "memory-cache": "^0.2.0",
     "mysql": "^2.18.1",
